@@ -3,8 +3,7 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 
-import usersRouter from './routes/users.js';
-import menusRouter from './routes/menus.js';
+import apiRouter from './routes/api/api.js';
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
@@ -20,8 +19,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/users', usersRouter);
-app.use('/menus', menusRouter)
-
+app.use('/api', apiRouter);
 
 export default app;
