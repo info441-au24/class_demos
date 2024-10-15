@@ -23,17 +23,7 @@ async function createUser(){
 
 async function getUsers(){
     const response = await fetch("api/users")
-//     const pterosaurJson = await response.json()
+    const userJsonText = await response.text()
 
-//     // use map to turn each json datapoint into html
-//     let pterosaurHtml = pterosaurJson.map(onePterosaur => {
-//         return `
-//         <div>
-//             <p>${onePterosaur.Genus}</p>
-//             <img src="${onePterosaur.img}" />
-//         </div>
-//         `
-//     }).join("")
-
-//     document.getElementById("results").innerHTML = pterosaurHtml
+    document.getElementById("results").innerHTML = userJsonText
 }

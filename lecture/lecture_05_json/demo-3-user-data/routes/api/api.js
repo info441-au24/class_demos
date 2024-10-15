@@ -11,12 +11,14 @@ router.post('/users', async (req, res) => {
     )
 })
 
-router.get('/getPterosaurs', async (req, res) => {
-    // // load data file
-    // const pterosaurFile = await fs.readFile("data/pterosaur.json")
+router.get('/users', async (req, res) => {
+    // load data file
+    const userFile = await fs.readFile("data/userData.json")
 
-    // // return data file
-    // res.json(filteredPterosaurJson)
+    const userJson = JSON.parse(userFile)
+
+    // return data file
+    res.json(userJson)
 })
 
 export default router
