@@ -11,6 +11,7 @@
     "debug": "~2.6.9",
     "express": "^4.21.0",
     "fs": "^0.0.1-security",
+    "mongoose": "^8.7.1",
     "morgan": "~1.9.1"
   }
 }
