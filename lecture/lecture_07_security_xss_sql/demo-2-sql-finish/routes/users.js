@@ -28,7 +28,28 @@ db.serialize(() => {
 
 
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  let nameSearch = req.query.nameSearch
+  nameSearch = nameSearch ? nameSearch : "" 
+
+  db.all(`SELECT * FROM people WHERE first_name = "${nameSearch}"`,
+    (err, allRows) => {
+      if(err){
+        console.log("db error:", err)
+        res.send("db error: " + err)
+        return
+      }
+
+      if(!allRows){
+        res.send("")
+        return
+      }
+      const matchingPeople = allRows.map(
+        row => `${row.first_name} ${row.last_name}`
+      ).join("\n")
+      res.send(matchingPeople)
+    }
+  )
+
 });
 
 export default router;
