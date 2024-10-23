@@ -1,0 +1,19 @@
+{
+  "name": "class_demos",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/info441-au24/class_demos.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/info441-au24/class_demos/issues"
+  },
+  "homepage": "https://github.com/info441-au24/class_demos#readme"
+}
