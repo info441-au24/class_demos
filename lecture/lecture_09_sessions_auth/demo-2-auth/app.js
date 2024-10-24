@@ -5,7 +5,7 @@ import logger from 'morgan';
 import sessions from 'express-session'
 
 // To install msal-node-wrapper, run:
-//     npm install https://gitpkg.now.sh/kylethayer/ms-identity-javascript-nodejs-tutorial-msal-node-v2-/Common/msal-node-wrapper?main
+//     npm install "https://gitpkg.now.sh/kylethayer/ms-identity-javascript-nodejs-tutorial-msal-node-v2-/Common/msal-node-wrapper?main"
 
 import WebAppAuthProvider from 'msal-node-wrapper'
 // original msal-node-wrapper code is here 
