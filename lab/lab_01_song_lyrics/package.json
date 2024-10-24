@@ -1,5 +1,5 @@
 {
-  "name": "demo-01-song-lyrics",
+  "name": "lab_01_song_lyrics",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.21.0"
+    "express": "^4.21.0",
+    "fs": "^0.0.1-security"
   }
 }
