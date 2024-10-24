@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
+import sessions from 'express-session'
 
 import usersRouter from './routes/users.js';
 
@@ -18,6 +19,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+const oneDay = 1000 * 60 * 60 * 24
+app.use(sessions({
+    secret: "this is some secret key I am making up 093u4oih54lkndso8y43hewrdskjf",
+    saveUninitialized: true,
+    cookie: {maxAge: oneDay},
+    resave: false
+}))
 
 app.use('/users', usersRouter);
 
