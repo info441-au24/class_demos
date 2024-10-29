@@ -9,6 +9,24 @@ async function addUser(){
     })
 }
 
+async function loadUsers(){
+    document.getElementById("allusersdiv").innerText = "loading..."
+
+    let response = await fetch("/api/v1/users")
+    let usersJson = await response.json()
+
+    // WARNING: XSS VULNERABILITIES HERE
+    let usersHTML = usersJson.map(userInfo => {
+        return `
+        <hr>
+        <div>
+            <h3>${userInfo.username}</h3>
+        </div>
+        `
+    }).join("")
+    document.getElementById("allusersdiv").innerHTML = usersHTML 
+}
+
 // async function loadUsers(){
 //     document.getElementById("allusersdiv").innerText = "loading..."
 
