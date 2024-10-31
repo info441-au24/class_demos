@@ -92,7 +92,15 @@ async function addBand(id){
     })
 }
 
-
+async function deleteUser(id){
+    await fetch("/api/v1/users", {
+        method: "DELETE",
+        headers: {'Content-Type': "application/json"},
+        body: JSON.stringify({
+            userId: id
+        })
+    })
+}
 
 // async function loadUsers(){
 //     document.getElementById("allusersdiv").innerText = "loading..."
