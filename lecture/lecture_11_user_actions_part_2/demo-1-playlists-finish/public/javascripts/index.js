@@ -20,15 +20,63 @@ async function loadUsers(){
         return `
         <hr>
         <div>
-            <h3>${userInfo.username}</h3>
+            <h3>
+                Username: ${userInfo.username}
+                <button onclick="deleteUser('${userInfo._id}')">Delete</button>
+            </h3>
             <strong>Favorite Bands:</strong>${userInfo.favorite_bands.join(", ")}<br>
             <strong>Add Band:</strong>
                 <input type="text" id="add_band_text_${userInfo._id}" /> <br>
             <button onclick="addBand('${userInfo._id}')">Add Band</button>
+
+            <h3> Playlists </h3>
+            <div id="playlist_div_${userInfo._id}">Loading Playlists...</div>
+
+            <h3>Add Playlist</h3>
+            <strong>Title:</strong> <input type="text" id="add_playlist_title_text_${userInfo._id}" /> <br>
+            <strong>Songs:</strong> <input type="text" id="add_playlist_song_text_${userInfo._id}" /> <br>
+            <button onclick="addPlaylist('${userInfo._id}')">Add Playlist</button>
         </div>
         `
     }).join("")
-    document.getElementById("allusersdiv").innerHTML = usersHTML 
+    document.getElementById("allusersdiv").innerHTML = usersHTML
+    
+    usersJson.forEach(userInfo => {
+        loadPlaylistsForUser(userInfo._id)
+    })
+}
+
+async function loadPlaylistsForUser(userId){
+    // get playlists for that user
+    let response = await fetch("/api/v1/playlists?userId=" + userId)
+    let playlistJSON = await response.json()
+
+    // add html to the right div for that user
+    //NOTE: VULNERABLE TO XSS ATTACKS
+    let playlistHTML = playlistJSON.map(playlistInfo => {
+        return `
+        <div>
+            <h4>Playlist: ${playlistInfo.title}</h4>
+            <strong>Songs</strong> ${playlistInfo.songs}
+        </div>`
+    }).join("")
+
+    document.getElementById("playlist_div_"+userId).innerHTML = playlistHTML
+}
+
+async function addPlaylist(userId){
+    let title = document.getElementById("add_playlist_title_text_"+userId).value
+    let songs = document.getElementById("add_playlist_song_text_"+userId).value
+
+    await fetch("/api/v1/playlists", {
+        method: "POST",
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            title: title,
+            songs: songs,
+            userId: userId
+        })
+    })
 }
 
 async function addBand(id){
@@ -43,6 +91,8 @@ async function addBand(id){
         })
     })
 }
+
+
 
 // async function loadUsers(){
 //     document.getElementById("allusersdiv").innerText = "loading..."

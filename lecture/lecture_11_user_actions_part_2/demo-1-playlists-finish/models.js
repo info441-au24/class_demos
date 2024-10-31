@@ -14,6 +14,14 @@ const userSchema = new mongoose.Schema({
 
 models.User = mongoose.model("User", userSchema)
 
+const playlistSchema = new mongoose.Schema({
+    title: String,
+    songs: String,
+    user: {type: mongoose.Schema.Types.ObjectId, ref: "User"}
+})
+
+models.Playlist = mongoose.model("Playlist", playlistSchema)
+
 console.log("successfully created database models")
 
 export default models
