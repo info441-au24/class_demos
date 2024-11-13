@@ -1,12 +1,20 @@
 <html>
   <head>
     <script>
-      const socketURL = 'ws://localhost:3000/chatSocket';
+      const socketURL = 'ws://localhost:3000/socket';
       let webSocket = new WebSocket(socketURL);
+
       function sendChat() {
-        let chatMsg = document.getElementById('textInput').value;
-        webSocket.send(chatMsg);
+        let message = document.getElementById('textInput').value;
+        webSocket.send(JSON.stringify({ action: 'sendMessage', message }));
       }
+
+      function updateName() {
+        let name = document.getElementById('nameInput').value;
+        webSocket.send(JSON.stringify({ action: 'updateName', name }));
+        document.getElementById('currentName').innerText = `Your Name: ${name}`;
+      }
+
       webSocket.onmessage = (event) => {
         const msg = event.data;
         document.getElementById('output').innerText += msg + '\n';
@@ -14,7 +22,12 @@
     </script>
   </head>
   <body>
-    <h1>Web socket chat demo!</h1>
+    <h1>WebSocket Chat Demo!</h1>
+
+    <input type="text" id="nameInput" />
+    <button id="sendBtn" onclick="updateName()">send</button>
+    <p id="currentName">Your Name: Not Set</p>
+
     <input type="text" id="textInput" />
     <button id="sendBtn" onclick="sendChat()">send</button>
 

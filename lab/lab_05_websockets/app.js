@@ -4,25 +4,38 @@ const app = express();
 enableWs(app);
 
 let socketCounter = 1;
-let allSockets = [];
+let allSockets = {};
 
-app.ws('/chatSocket', (ws, res) => {
+app.ws('/socket', (ws, res) => {
   let mySocketNum = socketCounter;
+  allSockets[mySocketNum] = {
+    socket: ws,
+    name: `Users${mySocketNum}`,
+  };
   socketCounter++;
 
-  console.log(`user ${mySocketNum} connected via websocket`);
-  allSockets.push(ws);
-
   ws.on('message', (chat) => {
-    console.log(`msg (user ${mySocketNum}): ${chat}`);
-    allSockets.forEach((socket) => {
-      socket.send(mySocketNum + ': ' + chat);
-    });
+    const message = JSON.parse(chat);
+    try {
+      if (message['action'] == 'updateName') {
+        allSockets[mySocketNum].name = message.name;
+      } else if (message['action'] == 'sendMessage') {
+        const name = allSockets[mySocketNum].name;
+        const currentMessage = message.message;
+        for (const [socketNum, socketInfo] of Object.entries(allSockets)) {
+          socketInfo.socket.send(name + ':' + currentMessage);
+        }
+      } else {
+        throw new Error('it failed inside');
+      }
+    } catch {
+      throw new Error('it failed');
+    }
   });
 
   ws.on('close', () => {
     console.log(`user ${mySocketNum} disconnected`);
-    console.log('I should probably delete them from the array or something');
+    delete allSockets[socketCounter];
   });
 });
 
