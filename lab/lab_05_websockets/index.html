@@ -1,27 +1,24 @@
 <html>
-<head>
+  <head>
     <script>
-        const socketURL = "ws://localhost:3000/chatSocket"
-        let webSocket = new WebSocket(socketURL)
-
-        function sendChat() {
-            let chatMsg = document.getElementById("textInput").value
-            webSocket.send(chatMsg)
-        }
-
-        webSocket.onmessage = event => {
-            const msg = event.data
-            document.getElementById("output").innerText += msg +"\n"
-        }
+      const socketURL = 'ws://localhost:3000/chatSocket';
+      let webSocket = new WebSocket(socketURL);
+      function sendChat() {
+        let chatMsg = document.getElementById('textInput').value;
+        webSocket.send(chatMsg);
+      }
+      webSocket.onmessage = (event) => {
+        const msg = event.data;
+        document.getElementById('output').innerText += msg + '\n';
+      };
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Web socket chat demo!</h1>
-
     <input type="text" id="textInput" />
     <button id="sendBtn" onclick="sendChat()">send</button>
 
     <h3>chat history</h3>
-    <div id = "output"></div>
-</body>
+    <div id="output"></div>
+  </body>
 </html>
