@@ -9,7 +9,8 @@
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
-    "express": "~4.16.1",
+    "express": "^4.21.1",
+    "http-proxy-middleware": "^3.0.3",
     "morgan": "~1.9.1"
   }
 }
